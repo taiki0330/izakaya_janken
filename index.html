@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>居酒屋ゲーム</title>
+  </head>
+  <body>
+    <div class="starter">
+      <div class="hands">
+        <button id="gu" class="button button_gu">👊</button>
+        <button id="choki" class="button button_choki">🤘</button>
+        <button id="pa" class="button button_pa">✋</button>
+      </div>
+      <div class="description">
+        <p>1 お互いに👊で勝つと、焼き鳥をランダムで一本選ぶ</p>
+        <p>2 お互いに🤘で勝つと、お酒をランダムで一杯選ぶ</p>
+        <p>3 お互いに✋で勝つと、50円分の割引ポイントを獲得する</p>
+        <p>4 20回して勝った数の多い方が勝ち。負けた方は全額奢り（笑）</p>
+      </div>
+    </div>
+    <div class="container">
+      <div class="user_section">
+        <div class="toggle_section">
+          <button class="toggle_btn_1">内訳</button>
+          <div class="toggle_box_1"></div>
+        </div>
+        <div class="user_box">
+          <p>ふッけいくん(福岡)</p>
+          <div class="user_img">
+            <img src="./img/fukkeikunn.jpeg" alt="" />
+          </div>
+          <div class="stamp user_stamp">奢り！！</div>
+        </div>
+      </div>
+
+      <div class="computer_section">
+        <div class="toggle_section">
+          <button class="toggle_btn_2">内訳</button>
+          <div class="toggle_box_2"></div>
+        </div>
+        <div class="computer_box">
+          <p>ピーポくん(東京)</p>
+          <div class="computer_img">
+            <img src="./img/pipokun.jpeg" alt="" />
+          </div>
+          <div class="stamp computer_stamp">奢り！！</div>
+        </div>
+      </div>
+    </div>
+    <div class="wrapper"></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+      $('.toggle_btn_1').on('click', function () {
+        $('.toggle_box_1').slideToggle();
+      });
+
+      $('.toggle_btn_2').on('click', function () {
+        $('.toggle_box_2').slideToggle();
+      });
+
+      const foodName = ['豚バラ', 'ぼんじり', '鶏皮', 'サガリ', 'つくね'];
+      const foodPrice = [200, 220, 150, 400, 300];
+      const drinkName = [
+        'ビール',
+        '赤ワイン',
+        '白ワイン',
+        'ハイボール',
+        'レモンサワー',
+      ];
+      const drinkPrice = [500, 650, 650, 450, 400];
+
+      const hands = ['gu', 'choki', 'pa'];
+
+      let count = 0;
+      let userWin = 0;
+      let computerWin = 0;
+      let userPay = 0;
+      let computerPay = 0;
+      let userPoint = 0;
+      let computerPoint = 0;
+
+      // ボタンクリックの処理
+      $('#gu, #choki, #pa').on('click', function () {
+        const playerHand = $(this).attr('id');
+
+        const i = Math.floor(Math.random() * hands.length);
+        const computerHand = hands[i];
+        if (count < 20) {
+          // 勝敗の処理
+          if (playerHand === computerHand) {
+            let newLine = $('<p>');
+            newLine.html('あいこ');
+            // $('.wrapper').append(newLine);
+          } else if (playerHand === 'gu' && computerHand === 'choki') {
+            const randomIndex = Math.floor(Math.random() * foodName.length);
+            const yakitori_1 = foodName[randomIndex];
+            const yakitori_price_1 = foodPrice[randomIndex];
+            let newP = $('<p>');
+            newP.html(`${yakitori_1} (${yakitori_price_1}円) x 1`);
+            $('.toggle_box_1').append(newP);
+            count += 1;
+            userWin += 1;
+            userPay += yakitori_price_1;
+            let newLine = $('<p>');
+            newLine.html(
+              `第${count}回、ふっけいくん: 👊、 ピーポくん: 🤘、 ふっけいくんの勝ち`
+            );
+            $('.wrapper').append(newLine);
+            console.log;
+          } else if (playerHand === 'pa' && computerHand === 'gu') {
+            count += 1;
+            userWin += 1;
+            userPoint += 50;
+            let newLine = $('<p>');
+            newLine.html(
+              `第${count}回、ふっけいくん: ✋、 ピーポくん: 👊、 ふっけいくんの勝ち`
+            );
+            $('.wrapper').append(newLine);
+          } else if (playerHand === 'choki' && computerHand === 'pa') {
+            const randomIndex = Math.floor(Math.random() * drinkName.length);
+            const drink_name_1 = drinkName[randomIndex];
+            const drink_price_1 = drinkPrice[randomIndex];
+            let newDinkP = $('<p>');
+            newDinkP.html(`${drink_name_1}(${drink_price_1}円) x 1`);
+            $('.toggle_box_1').append(newDinkP);
+            count += 1;
+            userWin += 1;
+            userPay += drink_price_1;
+            let newLine = $('<p>');
+            newLine.html(
+              `第${count}回、ふっけいくん: 🤘、 ピーポくん: ✋、 ふっけいくんの勝ち`
+            );
+            $('.wrapper').append(newLine);
+          } else if (playerHand === 'choki' && computerHand === 'gu') {
+            const randomIndex = Math.floor(Math.random() * foodName.length);
+            const yakitori_2 = foodName[randomIndex];
+            const yakitori_price_2 = foodPrice[randomIndex];
+            let newP = $('<p>');
+            newP.html(`${yakitori_2}(${yakitori_price_2}円) x 1`);
+            $('.toggle_box_2').append(newP);
+            count += 1;
+            computerWin += 1;
+            computerPay += yakitori_price_2;
+            let newLine = $('<p>');
+            newLine.html(
+              `第${count}回、ふっけいくん: 🤘、 ピーポくん: 👊、 コンピューターの勝ち`
+            );
+            $('.wrapper').append(newLine);
+          } else if (playerHand === 'pa' && computerHand === 'choki') {
+            const randomIndex = Math.floor(Math.random() * drinkName.length);
+            const drink_name_2 = drinkName[randomIndex];
+            const drink_price_2 = drinkPrice[randomIndex];
+            let newDinkP = $('<p>');
+            newDinkP.html(`${drink_name_2}(${drink_price_2}円) x 1`);
+            $('.toggle_box_2').append(newDinkP);
+            count += 1;
+            computerWin += 1;
+            computerPay += drink_price_2;
+            let newLine = $('<p>');
+            newLine.html(
+              `第${count}回、ふっけいくん: ✋、 ピーポくん: 🤘、 ピーポくんの勝ち`
+            );
+            $('.wrapper').append(newLine);
+          } else if (playerHand === 'gu' && computerHand === 'pa') {
+            count += 1;
+            computerWin += 1;
+            computerPoint += 50;
+            let newLine = $('<p>');
+            newLine.html(
+              `第${count}回、ふっけいくん: 👊、 ピーポくん: ✋、 ピーポくんの勝ち`
+            );
+            $('.wrapper').append(newLine);
+          }
+        } else {
+          $('.wrapper').empty();
+
+          let newLine = $('<h3>');
+          newLine.html('FINISHED!!');
+          $('.wrapper').append(newLine);
+          //     console.log('finished');
+
+          const finalUserWin = userWin;
+          let userScoreBord = $('<h3>');
+          userScoreBord.addClass('left');
+          userScoreBord.html(`ふっけいくん: ${finalUserWin}回の勝ち`);
+          $('.wrapper').append(userScoreBord);
+
+          //     console.log(finalUserWin);
+
+          const finalComputerWin = computerWin;
+          let computerScoreBord = $('<h3>');
+          computerScoreBord.addClass('right');
+          computerScoreBord.html(`ピーポくん: ${finalComputerWin}回の勝ち`);
+          $('.wrapper').append(computerScoreBord);
+
+
+
+          //     console.log(finalComputerWin);
+
+          let userPayBord = $('<h3>');
+          userPayBord.addClass('left');
+          userPayBord.html(`ふっけいくん: ${userPay}円分の飲食`);
+          $('.wrapper').append(userPayBord);
+
+          let computerPayBord = $('<h3>');
+          computerPayBord.addClass('right');
+          computerPayBord.html(`ピーポくん: ${computerPay}円分の飲食`);
+          $('.wrapper').append(computerPayBord);
+
+          let userPointBord = $('<h3>');
+          userPointBord.addClass('left');
+          userPointBord.html(`ふっけいくん: ${userPoint}円分のポイント獲得`);
+          $('.wrapper').append(userPointBord);
+
+          let computerPointBord = $('<h3>');
+          computerPointBord.addClass('right');
+          computerPointBord.html(
+            `ピーポくん: ${computerPoint}円分のポイント獲得`
+          );
+          $('.wrapper').append(computerPointBord);
+
+          const finalUserPay = userPay - userPoint;
+          const finalComputerPay = computerPay - computerPoint;
+
+          let finalUserPayBord = $('<h3>');
+          finalUserPayBord.addClass('left');
+          finalUserPayBord.html(`ふっけいくん: ${finalUserPay}円の支払い額`);
+          $('.wrapper').append(finalUserPayBord);
+
+          let finalComputerPayBord = $('<h3>');
+          finalComputerPayBord.addClass('right');
+          finalComputerPayBord.html(
+            `ピーポくん: ${finalComputerPay}円の支払い額`
+          );
+          $('.wrapper').append(finalComputerPayBord);
+
+          const sumPay = finalUserPay + finalComputerPay;
+
+          if (finalUserWin > finalComputerWin) {
+            $('.user_section').css('background-color', 'green');
+            $('.computer_section').css('background-color', 'gray');
+            $('.computer_stamp').css('display', 'block').html(`${sumPay}円の奢り`);
+          } else if (finalUserWin < finalComputerWin) {
+            $('.computer_section').css('background-color', 'green');
+            $('.user_section').css('background-color', 'gray');
+            $('.user_stamp').css('display', 'block').html(`${sumPay}円の奢り`);
+          } else {
+            $('.computer_section').css('background-color', 'gray');
+            $('.user_section').css('background-color', 'gray');
+          }
+          console.log(sumPay);
+        }
+      });
+
+      const randomNumber = Math.floor(Math.random() * 3);
+      let computerChoice = randomNumber;
+
+      // for(let times = 0; times <= 5; times++) {
+      //       $(".button_gu").on('click', function() {
+      //             const useChoice = 0;
+
+      //             if (computerChoice === 0) {
+      //                   console.log("draw");
+      //             } else if (computerChoice === 1) {
+      //                   console.log("user win");
+      //                   const randomIndex = Math.floor(Math.random() * foodName.length);
+      //                   const yakitori_1 = foodName[randomIndex];
+      //                   const yakitori_price_1 = foodPrice[randomIndex];
+      //                   let newP = $('<p>');
+      //                   newP.html(`${yakitori_1} (${yakitori_price_1}円) x 1`);
+      //                   $('.toggle_box_1').append(newP);
+      //             } else {
+      //                   console.log("computer win");
+      //                   computerPoint += 100;
+      //                   console.log(computerPoint);
+      //             }
+      //       });
+
+      //       $(".button_choki").on('click', function() {
+      //             const useChoice = 1;
+
+      //             if (computerChoice === 1) {
+      //                   console.log("draw");
+      //             } else if (computerChoice === 2) {
+      //                   console.log("user win");
+      // const randomIndex = Math.floor(Math.random() * drinkName.length);
+      // const drink_name_1 = drinkName[randomIndex];
+      // const drink_price_1 = drinkPrice[randomIndex];
+      // let newDinkP = $('<p>');
+      // newDinkP.html(`${drink_name_1}(${drink_price_1}円) x 1`);
+      // $('.toggle_box_1').append(newDinkP);
+      //             } else {
+      // console.log("computer win");
+      // const randomIndex = Math.floor(Math.random() * foodName.length);
+      // const yakitori_2 = foodName[randomIndex];
+      // const yakitori_price_2 = foodPrice[randomIndex];
+      // let newP = $('<p>');
+      // newP.html(`${yakitori_2}(${yakitori_price_2}円) x 1`);
+      // $('.toggle_box_2').append(newP);
+      //             }
+      //       });
+
+      //       $(".button_pa").on('click', function() {
+      //             const useChoice = 2;
+
+      //             if (computerChoice === 2) {
+      //                   console.log("draw");
+      //             } else if (computerChoice === 0) {
+      //                   console.log("user win");
+      //                   userPoint += 100;
+      //                   console.log(userPoint);
+      //             } else{
+      //                   console.log("computer win");
+      // const randomIndex = Math.floor(Math.random() * drinkName.length);
+      // const drink_name_2 = drinkName[randomIndex];
+      // const drink_price_2 = drinkPrice[randomIndex];
+      // let newDinkP = $('<p>');
+      // newDinkP.html(`${drink_name_2}(${drink_price_2}円) x 1`);
+      // $('.toggle_box_2').append(newDinkP);
+      //             }
+      //       });
+      // };
+    </script>
+  </body>
+</html>
