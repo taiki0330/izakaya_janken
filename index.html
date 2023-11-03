@@ -53,6 +53,8 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
+
+      // トグルボタンの操作
       $('.toggle_btn_1').on('click', function () {
         $('.toggle_box_1').slideToggle();
       });
@@ -61,8 +63,12 @@
         $('.toggle_box_2').slideToggle();
       });
 
+      // データの配列を作成
+      // 焼き鳥の名前配列
       const foodName = ['豚バラ', 'ぼんじり', '鶏皮', 'サガリ', 'つくね'];
+      // 焼き鳥の価格配列
       const foodPrice = [200, 220, 150, 400, 300];
+      // お酒の名前配列
       const drinkName = [
         'ビール',
         '赤ワイン',
@@ -70,44 +76,67 @@
         'ハイボール',
         'レモンサワー',
       ];
+      // お酒の価格配列
       const drinkPrice = [500, 650, 650, 450, 400];
 
+      // じゃんけんの手の配列
       const hands = ['gu', 'choki', 'pa'];
 
+      // じゃんけんの回数
       let count = 0;
+      // ユーザーの勝ち数
       let userWin = 0;
+      // コンピューターの勝ち数
       let computerWin = 0;
+      // ユーザーの支払い額
       let userPay = 0;
+      // コンピューターの支払い額
       let computerPay = 0;
+      // ユーザーの獲得ポイント
       let userPoint = 0;
+      // コンピューターの獲得ポイント
       let computerPoint = 0;
 
-      // ボタンクリックの処理
+      // じゃんけんボタンクリックの処理
       $('#gu, #choki, #pa').on('click', function () {
         const playerHand = $(this).attr('id');
-
+        // ランダムの数を取得
         const i = Math.floor(Math.random() * hands.length);
+        // コンピューターの手を決定        
         const computerHand = hands[i];
+        // ２０回未満のとき
         if (count < 20) {
           // 勝敗の処理
           if (playerHand === computerHand) {
+            // 新しいPタグを作成
             let newLine = $('<p>');
+            // 上記Pタグに入れるテキストを作成
             newLine.html('あいこ');
             // $('.wrapper').append(newLine);
           } else if (playerHand === 'gu' && computerHand === 'choki') {
+            // ランダムな数を確定
             const randomIndex = Math.floor(Math.random() * foodName.length);
+            // ランダムな焼き鳥の名前を取得
             const yakitori_1 = foodName[randomIndex];
+            // ランダムな焼き鳥の価格を取得
             const yakitori_price_1 = foodPrice[randomIndex];
+            // 新しいpタグを作成
             let newP = $('<p>');
+            // 上記Pタグに入れる文字を作成
             newP.html(`${yakitori_1} (${yakitori_price_1}円) x 1`);
+            // ユーザートグルボックスに上記Pタグを追加
             $('.toggle_box_1').append(newP);
+            // 回数を１回足す
             count += 1;
+            // ユーザーの勝ち数を１足す
             userWin += 1;
+            // ゆーざーの支払い額に上記焼き鳥の価格を足す
             userPay += yakitori_price_1;
             let newLine = $('<p>');
             newLine.html(
               `第${count}回、ふっけいくん: 👊、 ピーポくん: 🤘、 ふっけいくんの勝ち`
             );
+            // 下記クラスの要素に追加
             $('.wrapper').append(newLine);
             console.log;
           } else if (playerHand === 'pa' && computerHand === 'gu') {
