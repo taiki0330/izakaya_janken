@@ -162,6 +162,7 @@
             newLine.html(
               `第${count}回、ふっけいくん: 🤘、 ピーポくん: ✋、 ふっけいくんの勝ち`
             );
+            console.log(newLine);
             $('.wrapper').append(newLine);
           } else if (playerHand === 'choki' && computerHand === 'gu') {
             const randomIndex = Math.floor(Math.random() * foodName.length);
@@ -266,8 +267,10 @@
           );
           $('.wrapper').append(finalComputerPayBord);
 
+          // 双方の合計金額を足す
           const sumPay = finalUserPay + finalComputerPay;
 
+          // ユーザーが勝つ
           if (finalUserWin > finalComputerWin) {
             $('.user_section').css('background-color', 'green');
             $('.computer_section').css('background-color', 'gray');
@@ -280,12 +283,12 @@
             $('.computer_section').css('background-color', 'gray');
             $('.user_section').css('background-color', 'gray');
           }
-          console.log(sumPay);
+          // console.log(sumPay);
         }
       });
 
-      const randomNumber = Math.floor(Math.random() * 3);
-      let computerChoice = randomNumber;
+      // const randomNumber = Math.floor(Math.random() * 3);
+      // let computerChoice = randomNumber;
 
       // for(let times = 0; times <= 5; times++) {
       //       $(".button_gu").on('click', function() {
