@@ -64,7 +64,7 @@ const $calcUserPay = function(user, point) {
       finalUserPay = user - point;
       return finalUserPay;
 }
-console.log();
+
 // コンピューターの最終支払額を計算
 let finalComputerPay = 0;
 const $calcComputerPay = function(computer, point) {
@@ -269,6 +269,7 @@ $('#gu, #choki, #pa').on('click', function () {
     //   ふっけいくんの支払額を定義
     $calcUserPay(userPay, userPoint);
 
+
     //   ピーポくんの支払額を定義
     $calcComputerPay(computerPay, computerPoint);
 
@@ -287,11 +288,12 @@ $('#gu, #choki, #pa').on('click', function () {
     // 双方の合計金額を足す
     const sumPay = finalUserPay + finalComputerPay;
 
-    // ユーザーが勝つ
+    // ユーザーが勝つとき
     if (finalUserWin > finalComputerWin) {
       $('.user_section').css('background-color', 'green');
       $('.computer_section').css('background-color', 'gray');
       $('.computer_stamp').css('display', 'block').html(`${sumPay}円の奢り`);
+      // コンピューターが勝つとき
     } else if (finalUserWin < finalComputerWin) {
       $('.computer_section').css('background-color', 'green');
       $('.user_section').css('background-color', 'gray');
@@ -303,7 +305,9 @@ $('#gu, #choki, #pa').on('click', function () {
 
   }
 
+
 });
+
 
 //     クイズページ
 
