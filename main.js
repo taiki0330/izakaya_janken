@@ -28,6 +28,12 @@ const hands = ['gu', 'choki', 'pa'];
 
 // じゃんけんの回数
 let count = 0;
+
+let userFoodCount = 0;
+let userDrinkCount = 0;
+let computerFoodCount = 0;
+let computerDrinkCount = 0;
+
 // ユーザーの勝ち数
 let userWin = 0;
 // コンピューターの勝ち数
@@ -101,6 +107,8 @@ $('#gu, #choki, #pa').on('click', function () {
       newP.html(`${yakitori_1} (${yakitori_price_1}円) x 1`);
       // ユーザートグルボックスに上記Pタグを追加
       $('.toggle_box_1').append(newP);
+      userFoodCount ++;
+
       // 回数を１回足す
       count += 1;
       // ユーザーの勝ち数を１足す
@@ -130,8 +138,9 @@ $('#gu, #choki, #pa').on('click', function () {
       let newDinkP = $('<p>');
       newDinkP.html(`${drink_name_1}(${drink_price_1}円) x 1`);
       $('.toggle_box_1').append(newDinkP);
-      count += 1;
-      userWin += 1;
+      userDrinkCount;
+      count++;
+      userWin++;
       $calcUser(0, drink_price_1)
       let newLine = $('<p>');
       newLine.html(
@@ -146,6 +155,7 @@ $('#gu, #choki, #pa').on('click', function () {
       let newP = $('<p>');
       newP.html(`${yakitori_2}(${yakitori_price_2}円) x 1`);
       $('.toggle_box_2').append(newP);
+      computerFoodCount++;
       count += 1;
       computerWin += 1;
       $calcComputer(yakitori_price_2, 0);
@@ -161,8 +171,9 @@ $('#gu, #choki, #pa').on('click', function () {
       let newDinkP = $('<p>');
       newDinkP.html(`${drink_name_2}(${drink_price_2}円) x 1`);
       $('.toggle_box_2').append(newDinkP);
-      count += 1;
-      computerWin += 1;
+      computerDrinkCount++;
+      count++;
+      computerWin++;
       $calcComputer(0, drink_price_2);
       let newLine = $('<p>');
       newLine.html(
@@ -228,12 +239,15 @@ $('#gu, #choki, #pa').on('click', function () {
     newLine.html('FINISHED!!');
     $('.wrapper').append(newLine);
 
+
+
     //   最終的にふっけいくんが勝った数を定義
     const finalUserWin = userWin;
     let userScoreBord = $('<h3>');
     userScoreBord.addClass('left');
     userScoreBord.html(`ふっけいくん: ${finalUserWin}回の勝ち`);
     $('.wrapper').append(userScoreBord);
+    console.log(finalUserWin);
 
     //   最終的にピーポくんが勝った数を定義
     const finalComputerWin = computerWin;
@@ -284,9 +298,19 @@ $('#gu, #choki, #pa').on('click', function () {
     finalComputerPayBord.addClass('right');
     finalComputerPayBord.html(`ピーポくん: ${finalComputerPay}円の支払い額`);
     $('.wrapper').append(finalComputerPayBord);
+    localStorage.setItem("ふっけい焼き鳥", userFoodCount);
+    localStorage.setItem("ふっけいお酒", userDrinkCount);
+    localStorage.setItem("ふっけい最終支払い", finalUserPay);
+    localStorage.setItem("ピーポ焼き鳥", computerFoodCount);
+    localStorage.setItem("ピーポお酒", computerDrinkCount);
+    localStorage.setItem("ピーポ最終支払い", finalComputerPay);
+    localStorage.setItem("ふっけい勝ち数", finalUserWin);
+    localStorage.setItem("ピーポの勝ち数", finalComputerWin);
+
 
     // 双方の合計金額を足す
     const sumPay = finalUserPay + finalComputerPay;
+    localStorage.setItem("２人の合計支払い額", sumPay);
 
     // ユーザーが勝つとき
     if (finalUserWin > finalComputerWin) {
