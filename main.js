@@ -86,7 +86,7 @@ $('#gu, #choki, #pa').on('click', function () {
   // コンピューターの手を決定
   const computerHand = hands[i];
   // ２０回未満のとき
-  if (count < 5) {
+  if (count < 20) {
     // 勝敗の処理
     if (playerHand === computerHand) {
       // 新しいPタグを作成
@@ -191,46 +191,46 @@ $('#gu, #choki, #pa').on('click', function () {
       $('.wrapper').append(newLine);
     }
   } else {
-    // 上の説明文を削除
-    $('.hands').empty();
-    $('.description').empty();
+    // // 上の説明文を削除
+    // $('.hands').empty();
+    // $('.description').empty();
 
-    // 新しい文を表示
-    let newTitle = $('<h1>');
-    newTitle.html('このページをできるだけ覚えてください');
-    $('.hands').append(newTitle);
+    // // 新しい文を表示
+    // let newTitle = $('<h1>');
+    // newTitle.html('このページをできるだけ覚えてください');
+    // $('.hands').append(newTitle);
 
-    // カウントダウン
-    let countDown = $('<span>');
-    countDown.addClass('countDownTime');
-    $('.description').append(countDown);
-    // スタート開始時を空定義
-    let startTime;
-    // １５秒を定義
-    let originTime = 15;
-    // クラスを取得の上、表示
-    const timer = document.querySelector('.countDownTime');
-    function startTimer() {
-      timer.innerText = originTime;
-      // スタート開始時に今の時間を定義
-      startTime = new Date();
-      setInterval(function () {
-        timer.innerText = originTime - getTimerTime();
-        // ０秒になったらtimeUP();を実行
-        if (timer.innerHTML <= 0) timeUp();
-      }, 1000);
-    }
-    // 今の時間 - １秒前の時間を引く
-    function getTimerTime() {
-      return Math.floor((new Date() - startTime) / 1000);
-    }
-    // 次のページに遷移
-    function timeUp() {
-      window.location.href = './quiz.html';
-    }
-    // 関数実行
-    startTimer();
-    // countDown.html(10);
+    // // カウントダウン
+    // let countDown = $('<span>');
+    // countDown.addClass('countDownTime');
+    // $('.description').append(countDown);
+    // // スタート開始時を空定義
+    // let startTime;
+    // // １５秒を定義
+    // let originTime = 15;
+    // // クラスを取得の上、表示
+    // const timer = document.querySelector('.countDownTime');
+    // function startTimer() {
+    //   timer.innerText = originTime;
+    //   // スタート開始時に今の時間を定義
+    //   startTime = new Date();
+    //   setInterval(function () {
+    //     timer.innerText = originTime - getTimerTime();
+    //     // ０秒になったらtimeUP();を実行
+    //     if (timer.innerHTML <= 0) timeUp();
+    //   }, 1000);
+    // }
+    // // 今の時間 - １秒前の時間を引く
+    // function getTimerTime() {
+    //   return Math.floor((new Date() - startTime) / 1000);
+    // }
+    // // 次のページに遷移
+    // function timeUp() {
+    //   window.location.href = './quiz.html';
+    // }
+    // // 関数実行
+    // startTimer();
+    // // countDown.html(10);
 
     //   下のセクションの中身を削除
     $('.wrapper').empty();
@@ -298,19 +298,12 @@ $('#gu, #choki, #pa').on('click', function () {
     finalComputerPayBord.addClass('right');
     finalComputerPayBord.html(`ピーポくん: ${finalComputerPay}円の支払い額`);
     $('.wrapper').append(finalComputerPayBord);
-    localStorage.setItem("ふっけい焼き鳥", userFoodCount);
-    localStorage.setItem("ふっけいお酒", userDrinkCount);
-    localStorage.setItem("ふっけい最終支払い", finalUserPay);
-    localStorage.setItem("ピーポ焼き鳥", computerFoodCount);
-    localStorage.setItem("ピーポお酒", computerDrinkCount);
-    localStorage.setItem("ピーポ最終支払い", finalComputerPay);
-    localStorage.setItem("ふっけい勝ち数", finalUserWin);
-    localStorage.setItem("ピーポの勝ち数", finalComputerWin);
+ 
 
 
     // 双方の合計金額を足す
     const sumPay = finalUserPay + finalComputerPay;
-    localStorage.setItem("２人の合計支払い額", sumPay);
+
 
     // ユーザーが勝つとき
     if (finalUserWin > finalComputerWin) {
@@ -332,6 +325,4 @@ $('#gu, #choki, #pa').on('click', function () {
 
 });
 
-
-//     クイズページ
 
